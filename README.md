@@ -9,7 +9,7 @@ This is the main code folder. It contains the following file:
 
 1. E_Synthetic.m in the Models folder: ODEs implementation of the E_Synthetic model  
 2. data_E_Synthetic.mat in the Data folder: dataset according to which the calibration is performed
-3. Robustness_serie_temporali.m: script for parameter perturbation, simulation of the ODE model and computation of the distance functions
+3. Robustness_time_siries.m: script for parameter perturbation, simulation of the ODE model and computation of the distance functions
 4. BaseHist_multiplearea_piuNr.m: script for performing the intersection between distance functions and for estimating conditional parameter 
    densities. It runs the following functions: upperLowerSet_Nr.m and intersection.m
 5. upperLowerSet_Nr.m: selection of the samples of the parameter vector for which all distance functions have values under or above the 
@@ -23,7 +23,7 @@ This is the main code folder. It contains the following file:
 # 2) Usage
 #################################
 
-1. Run Robustness_serie_temporali.m, setting the following parameters:
+1. Run Robustness_time_siries.m, setting the following parameters:
             - time_points: time points where data are sampled
             - parameters of the model. 
             - LBpi and UBpi: lower and upper bound of the perturbed parameter space 
