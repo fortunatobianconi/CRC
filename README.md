@@ -29,16 +29,18 @@ This is the main code folder. It contains the following file:
 * Nr and NSample: number of realizations and number of parameter samples for each realization;
 * model: pointer to the model to calibrate;
 * Nobs: number of measured output variables.
+
 This script creates two .mat file where all the results are stored.
 
 2. Run BaseHist_multiplearea_piuNr.m, setting the following parameters:
 * name of the target region chosen for calibration
 * protein_name: names of the proteins selected for calibration
 * lowThr or/and highThr: array of chosen thresholds for each distance function.
+
 This script calls upperLowerSet_Nr.m and intersection.m.
 It computes: xbin_p and ks_p, cell arrays for storing conditional parameter densities CloudCondL: modes of the parameters density functions conditioned to the region of interest. 
 
-3. (Optional) Run BaseHist_MIRI.m: if both the calibration toward low values and high values of distance functions have been performed, MIRI can be computed, after loading results obtained in the previous steps. This script returns: MIRIT: array containing, for each realization, MIRI indexes for each parameter figures of the parameter density functions, conditioned to both opposite regions
+3. (Optional) Run BaseHist_MIRI.m: if both the calibration toward low values and high values of distance functions have been performed, MIRI can be computed, after loading results obtained in the previous steps. This script returns: MIRIT: array containing, for each realization, MIRI indexes for each parameter figures of the parameter density functions, conditioned to both opposite regions.
            
         
 
