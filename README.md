@@ -1,5 +1,6 @@
 # CRC
 Conditional Robust Calibration 
+(Fundamental code)
 #################################
 # 1) Files description
 #################################
