@@ -11,13 +11,28 @@ model=@E_Synthetic;
 % time points of the simulation
 time_points=[0 3.33 6.66 10 13.33 16.66 20 23.33 26.66 30 40];
 
-% definition of the model parameters and the corresponding non-zero elements 
+% definition of the model parameters and the corresponding non-zero
+% elements.
+% in the first iteration, perturbed model parameters are all set to one,
+% while in the subsequent iterations their nominal value is equal to the
+% mode of the probability density function computed in the previous
+% iteration and then the parameters are perturbed around the mode vector.
+
+%load('mode_parameters_iteration1.mat');
+
+% initial conditions
 ini_val=[1 0 0 1 0];
 index_non_zero_ini_val=[1 4];
+%ini_val = [mode_parameters_iteration1(4) 0 0 mode_parameters_iteration1(5)
+% 0];
 
+% kinetic parameters
 pN=[1 1 1];
+% pN= mode_parameters_iteration1(1:3);
 
+%scale factors
 scale_factors=[1 1];
+% scale_factors = mode_parameters_iteration1(6:7);
 
 % definition of the fixed input model parameters
 L=1;
@@ -27,7 +42,7 @@ LBpi=0.01; % Lower bound
 UBpi=100;   % Upper bound
 
 Nsample=1000; % number of samples for each parameter
-Nr=10; % number of independent realizations
+Nr=2; % number of independent realizations
 
 % number of observables
 Nobs=2;
@@ -37,7 +52,7 @@ Results=cell(Nr,Nobs+1);
 
 % Perform parallel perturbed simulations and store data
 
-matlabpool open local 4
+poolobj=parpool(4);
 for k=1:Nr
     k
     Nominal_Y1=zeros(length(time_points),Nsample);
@@ -70,7 +85,7 @@ for k=1:Nr
     
     parfor i=1:Nsample
         
-        % model simulation for each parameter sample
+        % model simulation for each generated parameter sample
         pi=pN.*Perturbation_pN(i,:);
         
         ini_val_temp=ini_val(index_non_zero_ini_val).*Perturbation_ini_val(i,:);
@@ -104,15 +119,16 @@ for k=1:Nr
     Results{k,3}=Nominal_Y2;
      
  end
-matlabpool close
+delete(poolobj);
 toc;
 
 save('Measures.mat');
 
 % load dataset for computation of the distance functions
+addpath('Data')
 load('Data/data_E_Synthetic.mat');
 
-% distance functions
+% computation of distance functions
 distance_iteration1=cell(Nr,Nobs);
 data=data_E_Synthetic;
 for k=1:Nr
@@ -123,7 +139,7 @@ for k=1:Nr
              distance_iteration1{k,i}(1,j)= (nansum(abs(data(:,i) - Results{k,i+1}(:,j))));
              
              % NDF 
-             %error_iteration1{k,i}(1,j)= 1/size(data,1) * sum(abs(data(:,i) - Results{k,i+1}(:,j))./data(:,i));
+             %distance_iteration1{k,i}(1,j)= 1/size(data,1) * sum(abs(data(:,i) - Results{k,i+1}(:,j))./data(:,i));
         end
     end
 end

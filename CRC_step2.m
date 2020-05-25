@@ -6,14 +6,15 @@ load('Measures.mat');
 load('distance_iteration1.mat');
 
 % observables names
-proteinName={'Y1','Y2'};
-
+%proteinName={'X1','X2'}; %Lotka Volterra
+proteinName={'Y1','Y2'}; %E_Synthetic
+%proteinName={'X1','X2','X3','X4','X5','X6','X7','X8','X9','X10','X11','X12','X13','X14','X15','X16'}; %MM model
 
 % tolerances definition for all observables   
 lowThr=[51 31];
 highThr=[];
 
-accepted_dist=upperLowerSet_Nr(distance_iteration1,Nr,Nsample,proteinName,lowThr,highThr)
+accepted_dist=upperLowerSet_Nr(distance_iteration1,Nr,Nsample,proteinName,lowThr,highThr);
 
 % perform intersection among selected values in order to define the region
 % of interest
@@ -68,5 +69,9 @@ for k=1:Nr
         
      end
      CloudCondLT=[CloudCondLT;CloudCondL];
- end
+end
   
+%save mode of the probability density functions
+save('mode_parameters_iteration1.mat','CloudCondLT');
+
+ 

@@ -1,3 +1,9 @@
+
+% ODE of the model taken from:
+% Raue, Andreas, et al. "Addressing parameter identifiability by model-based experimentation."
+% IET systems biology 5.2 (2011): 120-130.
+
+
 function dx=E_Synthetic(t,x,L,parameter)
 
 k=parameter;
@@ -14,10 +20,8 @@ k2=k(2);
 k3=k(3);
 
 
-
-
 %%------------------------------%%
-%   Concentration of Proteins    %
+%   Protein concentrations       %
 %%------------------------------%%
 
 E=x(1);
@@ -25,6 +29,7 @@ E_active=x(2);
 E_active_active=x(3);
 S=x(4);
 P=x(5);
+
 
 %%-----------------------------------%%
 %              Equations              %
@@ -46,5 +51,6 @@ dx(2)=d_E_active;
 dx(3)=d_E_active_active;
 dx(4)=d_S;
 dx(5)=d_P;
+
 end
 

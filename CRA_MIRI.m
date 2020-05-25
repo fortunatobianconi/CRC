@@ -1,15 +1,15 @@
-% script for the computation of MIRI (Moment Independent Robustness
-% Indicator) for each parameter
+% Conditional robustness analysis: script for the computation of MIRI 
+%(Moment Independent Robustness Indicator) for each parameter
 
 clear all
 close all
 
-% load final parameters obtained in the calibration toward low values of the
+% load final mode parameters obtained in the calibration toward low values of the
 % distance functions
 load('parameters_low.mat')
 p_low=parameters_low;
 
-% load final parameters obtained in the calibration toward high values of the
+% load final mode parameters obtained in the calibration toward high values of the
 % distance functions 
 load('parameters_high.mat')
 p_high=parameters_high;
@@ -37,7 +37,7 @@ for k=1:Nr
     NCloudL=0;
     
     for i=1:length(all_intersection_high(k,:))
-        if strcmp(all_intersection_high{2*k,i},'UU');
+        if strcmp(all_intersection_high{2*k,i},'UU')
             NCloudU=length(all_intersection_high{2*k-1,i});
             index_1=i; 
             break;
@@ -73,6 +73,7 @@ for k=1:Nr
         [ks_UUU xbin_UUU]=ksdensity(p_high(ip).*Results{k,1}(all_intersection_high{2*k-1,index_1}(:),ip),parameter_axis);
         [ks_LLL xbin_LLL]=ksdensity(p_low(ip).*Results{k,1}(all_intersection_low{2*k-1,index_2},ip),parameter_axis);        
        
+        % plot probability density functions 
         figure(ip)
         plot(xbin_UUU, ks_UUU,'r',xbin_LLL,ks_LLL,'b');
         hold on;
